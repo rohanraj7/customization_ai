@@ -4,9 +4,10 @@
 
 import { cn } from "@/lib/utils";
 import { Montserrat } from "next/font/google";
-import {ImageIcon,Code,Settings, LayoutDashboard, MessageSquare, MusicIcon, VideoIcon } from "lucide-react"
+import {ImageIcon,Code,Settings, LayoutDashboard, MessageSquare, Music, VideoIcon } from "lucide-react"
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const montserrat = Montserrat({ 
     weight: "600",
@@ -24,29 +25,29 @@ const routes = [
     {
         label: "Conversation",
         icon: MessageSquare,
-        href: "/conversations",
+        href: "/conversation",
         color: "text-orange-500",
     },
     {
-        label: "Image Generation",
+        label: "Image Generator",
         icon: ImageIcon,
         href: "/images",
         color: "text-pink-700",
     },
     {
-        label: "video Generation",
+        label: "video Generator",
         icon: VideoIcon,
         href: "/videos",
         color: "text-orange-700",
     },
     {
-        label: "Music Generation",
-        icon: MusicIcon,
+        label: "Music Generator",
+        icon: Music,
         href: "/music",
         color: "text-purple-700",
     },
     {
-        label: "Code Generation",
+        label: "Code Generator",
         icon: Code,
         href: "/codes",
         color: "text-emerald-500",
@@ -59,8 +60,9 @@ const routes = [
 ]
 
 const Sidebar = () =>{
+    const pathname = usePathname()
     return(
-        <div className="space-y-4 flex flex-col h-full bg-[#`11182] text-white">
+        <div className="space-y-4 flex flex-col h-full bg-[#111827] text-white">
             <div className="px-3 py-2 flex-1">
                 <Link href="/dashboard" className="flex 
                 items-center pl-2 mb-14">
@@ -80,9 +82,10 @@ const Sidebar = () =>{
                         <Link
                         href={route.href}
                         key={route.href}
-                        className="text-sm group flex p-3 w-full justify-start
-                        font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg 
-                        transition"
+                        className={cn(
+                            "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer hover:text-white hover:bg-white/10 rounded-lg transition",
+                            pathname === route.href ? "text-white bg-white/10" : 'text-zinc-400'
+                          )}                          
                         >
                             <div className="flex items-center flex-1">
                                 <route.icon className={cn("h-5 w-5 mr-3 ", route.
